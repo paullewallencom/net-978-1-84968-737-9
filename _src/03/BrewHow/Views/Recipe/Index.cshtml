@@ -1,0 +1,42 @@
+﻿@model IEnumerable<BrewHow.Models.Recipe>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Style)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OriginalGravity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinalGravity)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Style)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OriginalGravity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinalGravity)
+        </td>
+    </tr>
+}
+
+</table>

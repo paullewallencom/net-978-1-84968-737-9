@@ -1,0 +1,50 @@
+﻿@model BrewHow.ViewModels.RecipeDisplayViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<article id="recipe-detail">
+<header>
+    <h2>Recipe for @Model.Name</h2>
+</header>
+<fieldset>
+    <legend>Recipe Details</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Style)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Style)
+    </div>
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GrainBill)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GrainBill)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Instructions)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Instructions)
+    </div>
+</fieldset>
+</article>
+<p>
+@if (Model.CanEdit) {
+    @Html.ActionLink("Edit", "Edit", new { id=Model.RecipeId, slug = Model.Slug }) 
+    @:|
+}
+    @Html.ActionLink("Back to List", "Index")
+</p>
+@{Html.RenderAction(
+	"Index", 
+	"Recipe", 
+	new { 
+		area = "Review", 
+		id = Model.RecipeId, 
+		slug = Model.Slug 
+	});
+}

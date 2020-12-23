@@ -1,0 +1,29 @@
+﻿@model IEnumerable<BrewHow.Areas.Review.ViewModels.ReviewListViewModel>
+
+<h2>
+    <a href="#" 
+        data-role="button" 
+        data-icon="back" 
+        data-iconpos="notext" 
+        data-inline="true" 
+        onclick="javascript:history.go(-1)">
+        Back</a>
+    @ViewBag.RecipeName
+</h2>
+
+<ul data-role="listview" data-inset="true">
+    @foreach (var item in Model)
+    {
+        <li>
+            <p style="white-space: normal;">
+                @Html.DisplayFor(modelItem => item.Comment)
+            </p>
+            <p class="ui-li-count">@item.Rating</p>
+        </li>
+    }
+</ul>
+<p>
+    @if (Request.IsAuthenticated) {
+        @Html.ActionLink("Add Review", "Create", new {area = "Review", id = ViewBag.RecipeId, name=ViewBag.RecipeName }, new { data_role = "button" })
+    }
+</p>

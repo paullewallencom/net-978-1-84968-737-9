@@ -1,0 +1,67 @@
+﻿@model BrewHow.ViewModels.ITypedPagedResult<BrewHow.ViewModels.RecipeDisplayViewModel>
+
+@{
+    ViewBag.Title = "My Library";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Style)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].OriginalGravity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].FinalGravity)
+        </th>
+        <th>
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Details", "Recipe", new { id=item.RecipeId, slug=item.Slug }, null)
+        </td>
+        <td>
+            @Html.ActionLink(Html.DisplayFor(modelItem => item.Style).ToHtmlString(), "Style", "Recipe", new { style = item.StyleSlug }, null)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OriginalGravity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinalGravity)
+        </td>
+        <td>
+            @Html.ActionLink("Remove from Library", "Delete", "Library", new { id = item.RecipeId }, new { @class = "remove-recipe", data_id = @item.RecipeId })
+        </td>
+    </tr>
+}
+
+</table>
+
+@{ Html.RenderPartial("PagingPartial", Model); }    
+@Html.AntiForgeryToken()
+
+@section scripts {
+<script type="text/javascript">
+    $(".remove-recipe").click(function(event) {
+        event.preventDefault();
+        $link = $(this);
+        $.post($link.attr('href'),
+            { __RequestVerificationToken: $("input[name=__RequestVerificationToken]").val() },
+            function (response) {
+                if (response.result == "ok") {
+                    $link.closest('tr').remove();
+                }
+            }
+        );
+    });
+</script>
+}

@@ -1,0 +1,76 @@
+﻿@model BrewHow.ViewModels.RecipeEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>RecipeEditViewModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StyleId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.StyleId, Model.StyleList)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OriginalGravity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OriginalGravity)
+            @Html.ValidationMessageFor(model => model.OriginalGravity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FinalGravity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FinalGravity)
+            @Html.ValidationMessageFor(model => model.FinalGravity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.GrainBill)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.GrainBill)
+            @Html.ValidationMessageFor(model => model.GrainBill)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Instructions)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Instructions)
+            @Html.ValidationMessageFor(model => model.Instructions)
+        </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+    @Html.HiddenFor(model => model.RecipeId)
+    @Html.HiddenFor(model => Model.Slug)
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

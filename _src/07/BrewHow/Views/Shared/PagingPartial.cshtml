@@ -1,0 +1,32 @@
+﻿@model BrewHow.ViewModels.IPagedResult
+
+<div id="pager">
+
+@if (Model.Page > 0)
+{
+    @Html.RouteLink("<< Prev", new
+    { 
+        page = Model.Page - 1,
+        controller = ViewContext.RouteData.Values["controller"],
+        action = ViewContext.RouteData.Values["action"]
+    },
+    new
+    {
+        id = "paging-prev"
+    });
+}
+<span>Page @(Model.Page + 1) of @Model.TotalPages</span>
+@if (Model.Page + 1 != Model.TotalPages)
+{
+    @Html.RouteLink("Next >>", new
+    {
+        page = Model.Page + 1,
+        controller = ViewContext.RouteData.Values["controller"],
+        action = ViewContext.RouteData.Values["action"]
+    },
+    new
+    {
+        id = "paging-next"
+    });
+}
+</div>

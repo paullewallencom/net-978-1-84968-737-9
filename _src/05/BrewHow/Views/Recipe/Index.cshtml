@@ -1,0 +1,47 @@
+﻿@model BrewHow.ViewModels.ITypedPagedResult<BrewHow.ViewModels.RecipeDisplayViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Style)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].OriginalGravity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].FinalGravity)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Details", new { id=item.RecipeId })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Style)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OriginalGravity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinalGravity)
+        </td>
+    </tr>
+}
+
+</table>
+
+@{ Html.RenderPartial("PagingPartial", Model); }    

@@ -1,0 +1,80 @@
+﻿@model BrewHow.ViewModels.RecipeDisplayViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Recipe Details</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Category)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Category)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Style)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Style)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OriginalGravity)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OriginalGravity)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FinalGravity)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FinalGravity)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PercentAlcoholByVolume)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PercentAlcoholByVolume)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.GrainBill)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.GrainBill)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Instructions)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Instructions)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.RecipeId, slug = Model.Slug }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+@{Html.RenderAction(
+	"Index", 
+	"Recipe", 
+	new { 
+		area = "Review", 
+		id = Model.RecipeId, 
+		slug = Model.Slug 
+	});
+}

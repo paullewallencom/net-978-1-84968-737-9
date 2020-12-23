@@ -1,0 +1,97 @@
+﻿@model BrewHow.ViewModels.RecipeDisplayViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<article id="recipe-detail">
+    <header>
+    <h2><a href="#" data-role="button" data-icon="back" data-iconpos="notext" data-inline="true" onclick="javascript:history.go(-1)">Back</a> @Model.Name</h2>
+    </header>
+    <section>
+        <header><strong>@Html.DisplayNameFor(model => model.PercentAlcoholByVolume)</strong></header>
+        @Html.DisplayFor(model => model.PercentAlcoholByVolume)
+    </section>
+    <br>
+    <section>
+        <header><strong>@Html.DisplayNameFor(model => model.OriginalGravity)</strong></header>
+        @Html.DisplayFor(model => model.OriginalGravity)
+    </section>
+        <br>
+    <section>
+        <header><strong>@Html.DisplayNameFor(model => model.FinalGravity)</strong></header>
+        @Html.DisplayFor(model => model.FinalGravity)
+        <br>
+    </section>
+        <br>
+    <section>
+        <header><strong>@Html.DisplayNameFor(model => model.GrainBill)</strong></header>
+        @Html.DisplayFor(model => model.GrainBill)
+        <br>
+    </section>
+        <br>
+    <section>
+        <header><strong>@Html.DisplayNameFor(model => model.Instructions)</strong></header>
+        @Html.DisplayFor(model => model.Instructions)
+    </section>
+</article>
+<br>
+<div>
+    @if (Request.IsAuthenticated) 
+    { 
+        @Html.ActionLink("Add to Library", "Create", "Library", 
+        new { 
+            id = Model.RecipeId 
+        }, 
+        new { 
+            @class = "add-recipe", 
+            data_id = Model.RecipeId,
+            data_role = "button"
+        })
+        @Html.ActionLink("Edit Recipe", "Edit", new 
+        { 
+            id = Model.RecipeId, 
+            slug = Model.Slug 
+        }, 
+        new { data_role = "button" })
+    }
+    @Html.ActionLink("View Reviews", "Index", new 
+    { 
+        area = "Review", 
+        id = Model.RecipeId,
+        name=Model.Name 
+    }, 
+    new { data_role = "button" })
+    @if (Request.IsAuthenticated) 
+    { 
+        @Html.ActionLink("Add Review", "Create", new 
+        { 
+            area = "Review", 
+            id = Model.RecipeId,
+            name=Model.Name 
+        }, 
+        new { data_role = "button" }); 
+    }
+</div>
+
+@Html.AntiForgeryToken()
+
+@section scripts {
+<script type="text/javascript">
+    $(function () {
+        $(".add-recipe").click(function(event) {
+            event.preventDefault();
+            $link = $(this);
+            $.post($link.attr("href"),
+                { __RequestVerificationToken: $("input[name=__RequestVerificationToken]").val() },
+                function (response) {
+                    if (response.result == "ok") {
+                        $link.replaceWith("<span>Recipe Added</span>");
+                    }
+                }
+            )
+        });
+    });
+</script>
+
+}

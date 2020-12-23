@@ -1,0 +1,79 @@
+﻿@model BrewHow.ViewModels.ITypedPagedResult<BrewHow.ViewModels.RecipeDisplayViewModel>
+
+@{
+    ViewBag.Title = ViewBag.Title ?? "Recipes";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+@if (Request.IsAuthenticated) {
+    @Html.ActionLink("Create New", "Create")
+}
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Style)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].OriginalGravity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].FinalGravity)
+        </th>
+@if(Request.IsAuthenticated) {
+        <th>
+
+        </th>
+}
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Details", new { id=item.RecipeId, slug=item.Slug })
+        </td>
+        <td>
+            @Html.ActionLink(Html.DisplayFor(modelItem => item.Style).ToHtmlString(), "Style", "Recipe", new { style = item.StyleSlug }, null)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OriginalGravity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinalGravity)
+        </td>
+@if (Request.IsAuthenticated) {
+        <td>
+            @Html.ActionLink("Add to Library", "Create", "Library", new { id = item.RecipeId }, new { @class = "add-recipe", data_id = @item.RecipeId })
+        </td>
+}
+    </tr>
+}
+
+</table>
+
+@{ Html.RenderPartial("PagingPartial", Model); }    
+
+@Html.AntiForgeryToken()
+
+@section scripts {
+<script type="text/javascript">
+    $(".add-recipe").click(function(event) {
+        event.preventDefault();
+        $link = $(this);
+        alert($link);
+        $.post($link.attr("href"),
+            { __RequestVerificationToken: $("input[name=__RequestVerificationToken]").val() },
+            function (response) {
+                if (response.result == "ok") {
+                    $link.replaceWith("<span>Recipe Added</span>");
+                }
+            }
+        )
+    });
+</script>
+}

@@ -1,0 +1,33 @@
+﻿@model BrewHow.ViewModels.ITypedPagedResult<BrewHow.ViewModels.RecipeDisplayViewModel>
+@{
+    ViewBag.Title = ViewBag.Title ?? "Recipes";
+}
+<ul 
+    data-role="listview" 
+    data-inset="true" 
+    data-filter="true" 
+    data-filter-placeholder="Search for a recipe...">
+    @foreach (var item in Model)
+    {
+    <li>
+        <a href="@Url.Action("Details", new 
+            { 
+                id = item.RecipeId, 
+                slug=item.Slug 
+            })">
+            <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+            <p>
+                @Html.DisplayFor(modelItem => item.Style)
+            </p>
+        </a>
+    </li>
+    }
+</ul>
+<p>
+@{ Html.RenderPartial("PagingPartial", Model); }
+</p>    
+<p>
+@if (Request.IsAuthenticated) {
+    @Html.ActionLink("Create Recipe", "Create", null, new { data_role = "button" })
+}
+</p>

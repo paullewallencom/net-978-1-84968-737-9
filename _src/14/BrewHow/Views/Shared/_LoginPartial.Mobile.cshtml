@@ -1,0 +1,26 @@
+﻿@if (Request.IsAuthenticated) {
+    <a href="javascript:document.getElementById('logoutForm')
+        .submit()" 
+        data-role="button" 
+        class="ui-btn-right">
+        Log off
+    </a>
+    using (Html.BeginForm(
+        "LogOff", 
+        "Account", 
+        new { area = "" },
+        FormMethod.Post,
+        new { id = "logoutForm" })) 
+    {
+        @Html.AntiForgeryToken()
+    }
+}
+else
+{
+    @Html.ActionLink(
+        "Log in", 
+        "Login", 
+        "Account", 
+        new { area = "" }, 
+        new { data_role="button", @class="ui-btn-right"});
+}
